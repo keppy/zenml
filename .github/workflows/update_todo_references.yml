@@ -1,0 +1,28 @@
+name: Update TODO references
+
+on:
+  push:
+    branches:
+      - michael/ENG-68-todo-tracking
+
+jobs:
+  update_todos:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Update Todos
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          JIRA_BASE_URL: https://zenml.atlassian.net
+          JIRA_USERNAME: 0
+          JIRA_API_TOKEN: 0
+          JIRA_BOARD_ID: 10004
+          JIRA_ISSUE_TYPE_ID: 10017
+        run: python scripts/update_todo_references.py
